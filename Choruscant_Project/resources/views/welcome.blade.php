@@ -16,6 +16,7 @@
             @csrf
             <button type="submit">Se déconnecter</button>
         </form>
+        <a href="{{ route('MyConstellation') }}">MyConstellation</a>
     @endauth
 </body>
 </html>
