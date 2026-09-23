@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Choruscant</title></head>
+<body>
+    <h1>Choruscant</h1>
+    <p>Découvrez et partagez votre musique.</p>
+
+    @guest
+        <a href="{{ route('login') }}">Se connecter</a>
+        <a href="{{ route('register') }}">Créer un compte</a>
+    @endguest
+
+    @auth
+        <p>Bonjour {{ auth()->user()->name }}.</p>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit">Se déconnecter</button>
+        </form>
+    @endauth
+</body>
+</html>
