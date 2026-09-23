@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserController::class, 'index'])
+    ->name('home');
 
 Route::get('/register', [AuthController::class, 'showRegister'])
     ->name('register');
@@ -23,3 +23,6 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::get('/my-constellation', [AuthController::class, 'myConstellation'])
     ->middleware('auth')
     ->name('MyConstellation');
+
+Route::get('/discovery/{user}', [UserController::class, 'discovery'])
+    ->name('Discovery');

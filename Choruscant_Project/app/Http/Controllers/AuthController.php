@@ -68,8 +68,4 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function myConstellation()
-    {
-        return view('my-constellation');
-    }
 }
