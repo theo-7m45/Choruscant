@@ -19,7 +19,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/discovery/{user}', [UserController::class, 'discovery'])
-    ->name('Discovery');
+    ->name('discovery');
 
 Route::get('/search', [UserController::class, 'search'])
     ->name('search');
@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     Route::get('/my-constellation', [UserController::class, 'myConstellation'])
-        ->name('MyConstellation');
+        ->name('my-constellation');
 
     Route::post('/MyConstellation', [MusicController::class, 'create'])
         ->name('musics.store');

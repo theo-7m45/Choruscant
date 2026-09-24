@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -27,9 +28,11 @@ class UserController extends Controller
             'query' => 'required|string|max:20',
         ])['query'];
 
-        $users = User::where('name', 'like', "%{$query}%")->get();
+        $users = User::all();
+        $searchResults = User::whereRaw('LOWER(name) LIKE ?', ['%' . Str::lower($query) . '%'])
+            ->get();
 
-        return view('welcome', compact('users', 'query'));
+        return view('welcome', compact('users', 'searchResults', 'query'));
     }
 
 

@@ -11,18 +11,34 @@
 
     @isset($query)
         <h2>Résultats pour « {{ $query }} »</h2>
-    @else
-        <h2>Cherche un utilisateurs</h2>
+        <a href="{{ url('/') }}">Masquer les résultats</a>
+        @if(isset($searchResults) && $searchResults->isNotEmpty())
+            @foreach ($searchResults as $user)
+                <a
+                    href="{{ route('discovery', $user) }}"
+                    aria-label="Voir la constellation de {{ $user->name }}"
+                    title="Voir la constellation de {{ $user->name }}"
+                    style="font-size: 2rem; text-decoration: none; display: inline-block; margin: 0.5rem;"
+                >
+                    ★
+                </a>
+            @endforeach
+        @else
+            <p>Aucun utilisateur trouvé pour cette recherche.</p>
+        @endif
     @endisset
 
-    @forelse ($users as $user)
-        <article>
-            <h3>{{ $user->name }}</h3>
-            <a href="{{ route('Discovery', $user) }}">Visiter cette constellation</a>
-        </article>
-    @empty
-        <p>Aucun utilisateur à découvrir.</p>
-    @endforelse
+    <h2>L'univers</h2>
+    @foreach ($users as $user)
+        <a
+            href="{{ route('discovery', $user) }}"
+            aria-label="Voir la constellation de {{ $user->name }}"
+            title="Voir la constellation de {{ $user->name }}"
+            style="font-size: 2rem; text-decoration: none; display: inline-block; margin: 0.5rem;"
+        >
+            ★
+        </a>
+    @endforeach
 
     @guest
         <a href="{{ route('login') }}">Se connecter</a>
@@ -35,7 +51,7 @@
             @csrf
             <button type="submit">Se déconnecter</button>
         </form>
-        <a href="{{ route('MyConstellation') }}">MyConstellation</a>
+        <a href="{{ route('my-constellation') }}">MyConstellation</a>
     @endauth
 </body>
 </html>
