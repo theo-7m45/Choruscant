@@ -5,157 +5,228 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Choruscant</title>
     <style>
-body {
-    background: #000000;
-    color: #ffffff;
-    font-family: sans-serif;
-    margin: 0;
-    padding: 2rem;
-}
+        body {
+            background: #000000;
+            color: #ffffff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+            position: relative; /* Nécessaire pour la barre de recherche fixée en bas */
+        }
 
-h1, h2, p, a, button, input {
-    color: #ffffff;
-}
+        h1, h2, p, a, button, input {
+            color: #ffffff;
+        }
 
-input {
-    background: #111111;
-    border: 1px solid #333333;
-    color: #ffffff;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-}
+        /* =========================
+           NAVIGATION HAUT (LOGO & BOUTONS)
+           ========================= */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem; /* Espace entre les boutons et le logo */
+            margin-bottom: 4rem;
+        }
 
-button {
-    background: #111111;
-    border: 1px solid #333333;
-    color: #ffffff;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
-}
+        .logo {
+            height: 70px; 
+            width: auto;
+        }
 
-/* =========================
-   ÉTOILE
-   ========================= */
+        /* Boutons globaux */
+        .btn {
+            padding: 0.6rem 2.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
 
-.star-dot {
-    width: 7px;
-    height: 7px;
-    display: inline-block;
-    position: relative;
-    margin: 0.25rem;
-    border-radius: 50%;
+        /* Bouton d'inscription (contour blanc) */
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-    /* Centre blanc parfaitement net */
-    background: #ffffff;
+        /* Bouton de connexion 
+        .btn-primary {
+            background: #6a329f; 
+            border: 1px solid #6a329f;
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background: #7d3eb8;
+        }
 
-    border: none;
-    box-sizing: border-box;
-    text-decoration: none;
+        /* =========================
+           BARRE DE RECHERCHE EN BAS
+           ========================= */
+        .search-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 400px;
+            max-width: 90%;
+            z-index: 10;
+        }
 
-    /* Important : permet aux halos de dépasser */
-    z-index: 1;
+        .search-form {
+            display: flex;
+            align-items: center;
+            background: #000000;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 0.3rem 0.5rem;
+        }
 
-    transition: transform 0.2s ease;
+        .search-input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            flex-grow: 1;
+            padding: 0.5rem;
+            outline: none;
+        }
 
-    /* Très légère lueur autour du point */
-    box-shadow:
-        0 0 2px rgba(255, 255, 255, 0.9);
-}
+        .search-input::placeholder {
+            color: #aaaaaa;
+        }
 
-/* =========================
-   GRAND HALO DIFFUS
-   ========================= */
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+       
+        .search-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #ffffff;
+        }
 
-.star-dot::before {
-    content: '';
-    position: absolute;
+        /* =========================
+           ÉTOILES
+           ========================= */
+        .star-dot {
+            width: 7px;
+            height: 7px;
+            display: inline-block;
+            position: relative;
+            margin: 0.25rem;
+            border-radius: 50%;
+            background: #ffffff;
+            border: none;
+            box-sizing: border-box;
+            text-decoration: none;
+            z-index: 1;
+            transition: transform 0.2s ease;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
+        }
 
-    top: 50%;
-    left: 50%;
+        .star-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 55px;
+            height: 55px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            filter: blur(18px);
+            z-index: -1;
+            pointer-events: none;
+        }
 
-    width: 55px;
-    height: 55px;
+        .star-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.20);
+            filter: blur(5px);
+            z-index: -1;
+            pointer-events: none;
+        }
 
-    transform: translate(-50%, -50%);
+        .star-dot:hover {
+            transform: scale(1.2);
+        }
 
-    border-radius: 50%;
+        .search-link {
+            background: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            text-decoration: none;
+            display: inline-block;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            margin-right: 0.5rem;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
 
-    /* Intensité du grand halo */
-    background: rgba(255, 255, 255, 0.12);
-
-    /* Plus le blur est grand, plus le halo est doux */
-    filter: blur(18px);
-
-    z-index: -1;
-
-    pointer-events: none;
-}
-
-/* =========================
-   PETIT HALO AUTOUR DU POINT
-   ========================= */
-
-.star-dot::after {
-    content: '';
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    width: 18px;
-    height: 18px;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.20);
-
-    filter: blur(5px);
-
-    z-index: -1;
-
-    pointer-events: none;
-}
-
-/* =========================
-   HOVER
-   ========================= */
-
-.star-dot:hover {
-    transform: scale(1.2);
-}
-
-.search-link {
-    color: #ffffff;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-
-
+        .search-link:hover {
+            background: #ffffff;
+            color: #000000;
+        }
     </style>
 </head>
 <body>
-    <h1>Choruscant</h1>
-    <p>Découvre et diffuse ta musique à travers tout l'univers</p>
-    <form action="{{ route('search') }}" method="GET">
-        <input type="text" name="query" placeholder="Rechercher un utilisateur" required>
-        <button type="submit">Rechercher</button>
-    </form>
+
+    <!-- Barre de navigation supérieure (Boutons + Logo) -->
+    <nav class="top-nav">
+        @guest
+            <a href="{{ route('register') }}" class="btn btn-outline">Sign up</a>
+           
+            <img src="{{ asset('images/logo.png') }}" alt="Choruscant Logo" class="logo">
+           
+            <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+        @endguest
+
+        @auth
+            <a href="{{ route('my-constellation') }}" class="btn btn-outline">MyConstellation</a>
+           
+            <img src="{{ asset('images/logo.png') }}" alt="Choruscant Logo" class="logo">
+           
+            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn btn-outline">Se déconnecter</button>
+            </form>
+        @endauth
+    </nav>
+
+    <!-- Contenu Principal -->
+    <h1 style="display:none;">Choruscant</h1> <!-- Masqué visuellement mais gardé pour le SEO/Structure si besoin -->
+    <p style="text-align:center; color:#aaaaaa;">Découvre et diffuse ta musique à travers tout l'univers</p>
+
+    @auth
+        <p style="text-align:center;">Bonjour {{ auth()->user()->name }}.</p>
+    @endauth
 
     @isset($query)
         <h2>Résultats pour « {{ $query }} »</h2>
         <a href="{{ url('/') }}" class="search-link">Masquer les résultats</a>
         @if(isset($searchResults) && $searchResults->isNotEmpty())
             @foreach ($searchResults as $user)
-                <a
-                    href="{{ route('discovery', $user) }}"
-                    aria-label="Voir la constellation de {{ $user->name }}"
-                    title="Voir la constellation de {{ $user->name }}"
-                    class="star-dot"
-                ></a>
+                <a href="{{ route('discovery', $user) }}" aria-label="Voir la constellation de {{ $user->name }}" title="Voir la constellation de {{ $user->name }}" class="star-dot"></a>
             @endforeach
         @else
             <p>Aucun utilisateur trouvé pour cette recherche.</p>
@@ -164,27 +235,23 @@ button {
 
     <h2>L'univers</h2>
     @foreach ($users as $user)
-        <a
-            href="{{ route('discovery', $user) }}"
-            aria-label="Voir la constellation de {{ $user->name }}"
-            title="Voir la constellation de {{ $user->name }}"
-            class="star-dot"
-        ></a>
+        <a href="{{ route('discovery', $user) }}" aria-label="Voir la constellation de {{ $user->name }}" title="Voir la constellation de {{ $user->name }}" class="star-dot"></a>
     @endforeach
 
-    @guest
-        <a href="{{ route('login') }}">Se connecter</a>
-        <a href="{{ route('register') }}">Créer un compte</a>
-    @endguest
-
-    @auth
-        <p>Bonjour {{ auth()->user()->name }}.</p>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit">Se déconnecter</button>
+    <!-- Barre de recherche flottante en bas à gauche -->
+    <div class="search-container">
+        <form action="{{ route('search') }}" method="GET" class="search-form">
+            <input type="text" name="query" placeholder="Rechercher une constellation ..." required class="search-input">
+            <button type="submit" class="search-btn">
+                <!-- Icône SVG Loupe -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 144 0 1 0 0-288 144 144 144 0 1 0 0 288z"/>
+                </svg>
+            </button>
         </form>
-        <a href="{{ route('my-constellation') }}">MyConstellation</a>
-    @endauth
+    </div>
+
+    <!-- Script des étoiles -->
 
     <script>
         document.querySelectorAll('.star-dot').forEach((star, index) => {
