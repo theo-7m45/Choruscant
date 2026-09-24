@@ -36,6 +36,35 @@
         }
         iframe { display: block; max-width: 100%; margin-bottom: 1rem; border: 1px solid #333; }
         form { margin-top: 1rem; }
+        .music-star {
+            position: relative;
+            width: 10px;
+            height: 10px;
+            margin: 1.5rem;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: #fff;
+            z-index: 1;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+        .music-star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 55px;
+            height: 55px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            filter: blur(18px);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .music-star:hover { transform: scale(1.25); }
+        .music-star[aria-expanded="true"] { box-shadow: 0 0 14px #fff; }
+        article[hidden] { display: none; }
     </style>
 </head>
 <body>
@@ -53,6 +82,9 @@
                 height="315"
                 src="https://www.youtube.com/embed/{{ $music->youtube_video_id }}"
                 title="{{ $music->title }}"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
         </article>
@@ -68,5 +100,23 @@
             <button type="submit">Se déconnecter</button>
         </form>
     @endauth
+
+    <script>
+        document.querySelectorAll('article').forEach((article) => {
+            const star = document.createElement('button');
+            star.type = 'button';
+            star.className = 'music-star';
+            star.setAttribute('aria-expanded', 'false');
+            star.setAttribute('aria-label', 'Afficher la musique');
+            article.hidden = true;
+            article.parentNode.insertBefore(star, article);
+
+            star.addEventListener('click', () => {
+                const isOpen = !article.hidden;
+                article.hidden = isOpen;
+                star.setAttribute('aria-expanded', String(!isOpen));
+            });
+        });
+    </script>
 </body>
 </html>
