@@ -60,7 +60,7 @@
 </head>
 <body>
     <h1>Choruscant</h1>
-    <p>Découvre et diffuse la musique à travers tout l'univers/p>
+    <p>Découvre et diffuse la musique à travers tout l'univers</p>
     <form action="{{ route('search') }}" method="GET">
         <input type="text" name="query" placeholder="Rechercher un utilisateur" required>
         <button type="submit">Rechercher</button>
