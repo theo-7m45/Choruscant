@@ -121,30 +121,25 @@
             dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + maxOpacity + ')';
 
             const flickerSpeed = 80 + index * 15;
-            const flickerDuration = 500;
-            const pauseDuration = 1500;
+            let flickerCount = 0;
 
-            const startFlicker = () => {
-                const flickerStartedAt = Date.now();
+            const flicker = () => {
+                if (flickerCount >= 5) {
+                    flickerCount = 0;
+                    dot.style.opacity = maxOpacity.toFixed(2);
+                    dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + maxOpacity + ')';
+                    setTimeout(flicker, 1500);
+                    return;
+                }
 
-                const flicker = () => {
-                    if (Date.now() - flickerStartedAt >= flickerDuration) {
-                        dot.style.opacity = maxOpacity.toFixed(2);
-                        dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + maxOpacity + ')';
-                        setTimeout(startFlicker, pauseDuration);
-                        return;
-                    }
-
-                    const opacity = minOpacity + Math.random() * (maxOpacity - minOpacity);
-                    dot.style.opacity = opacity.toFixed(2);
-                    dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + opacity + ')';
-                    setTimeout(flicker, flickerSpeed);
-                };
-
-                flicker();
+                const opacity = minOpacity + Math.random() * (maxOpacity - minOpacity);
+                dot.style.opacity = opacity.toFixed(2);
+                dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + opacity + ')';
+                flickerCount++;
+                setTimeout(flicker, flickerSpeed);
             };
 
-            setTimeout(startFlicker, index * 100);
+            setTimeout(flicker, index * 100);
         });
     </script>
 </body>
