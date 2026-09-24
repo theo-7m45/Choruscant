@@ -9,6 +9,8 @@ use App\Models\User;
 
 class Music extends Model
 {
+    protected $table = 'musics';
+
     protected $fillable = [
         'user_id',
         'title',
