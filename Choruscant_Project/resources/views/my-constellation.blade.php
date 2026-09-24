@@ -7,7 +7,26 @@
 </head>
 <body>
     <h1>MyConstellation</h1>
-    <p>Bienvenue dans ta constellation musicale, {{ auth()->user()->name }}.</p>
+    <p>Bienvenue dans ta constellation musicale, {{ $user->name }}.</p>
+
+    <h2>Mes musiques</h2>
+
+    @forelse ($user->musics as $music)
+        <article>
+            <h3>{{ $music->title }}</h3>
+
+            <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/{{ $music->youtube_video_id }}"
+                title="{{ $music->title }}"
+                allowfullscreen>
+            </iframe>
+        </article>
+    @empty
+        <p>Tu n'as pas encore ajouté de musique.</p>
+    @endforelse
+
     <a href="{{ url('/') }}">Retour à l'accueil</a>
 
     <form action="{{ route('logout') }}" method="POST">

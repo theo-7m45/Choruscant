@@ -20,7 +20,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
-Route::get('/my-constellation', [AuthController::class, 'myConstellation'])
+Route::get('/my-constellation', [UserController::class, 'myConstellation'])
     ->middleware('auth')
     ->name('MyConstellation');
 
