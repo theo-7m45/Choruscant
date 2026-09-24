@@ -8,7 +8,7 @@ class MusicController extends Controller
 {
     public function create()
     {
-        return view('musics.create');
+        
     }
 
     public function edit($id)
@@ -35,3 +35,4 @@ class MusicController extends Controller
 
         return redirect()->route('musics.index')->with('success', 'Music updated successfully.');
     }
+}

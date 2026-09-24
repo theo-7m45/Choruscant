@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         $user = auth()->user()->load('musics');
 
-        return view('my-constellation', compact('user'));
+        return view('auth.MyConstellation', compact('user'));
     }
 
     public function index()
