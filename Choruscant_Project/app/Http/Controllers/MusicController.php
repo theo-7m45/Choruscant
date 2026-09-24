@@ -2,37 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Music;
 use Illuminate\Http\Request;
 
 class MusicController extends Controller
 {
-    public function create()
+
+
+    public function create(Request $request)
     {
-        
-    }
-
-    public function edit($id)
-    {
-        $music = Music::findOrFail($id);
-
-        return view('musics.edit', compact('music'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $music = Music::findOrFail($id);
-
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
-            'artist' => 'required|string|max:255',
-            'album' => 'nullable|string|max:255',
-            'year' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'genre' => 'nullable|string|max:255',
-            'url' => 'nullable|url',
+            'youtube_video_id' => [
+                'required',
+                'regex:/^[A-Za-z0-9_-]{11}$/',
+            ],
         ]);
 
-        $music->update($request->all());
+        $request->user()->musics()->create($data);
 
-        return redirect()->route('musics.index')->with('success', 'Music updated successfully.');
+        return back()->with('success', 'Musique ajoutée.');
     }
+//________________________________
+
+
+    public function edit_views(Music $music)
+    {
+        abort_unless($music->user_id === auth()->id(), 403);
+
+        return view('auth.edit_views', compact('music'));
+    }
+
+//_________________________________
+
+    public function edit(Request $request, Music $music)
+    {
+        abort_unless($music->user_id === auth()->id(), 403);
+
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'youtube_video_id' => [
+                'required',
+                'regex:/^[A-Za-z0-9_-]{11}$/',
+            ],
+        ]);
+
+        $music->update($data);
+
+        return redirect()
+            ->route('MyConstellation')
+            ->with('success', 'Musique modifiée.');
+    }
+
+//_____________________
+
+public function delete(Music $music)
+{
+    abort_unless($music->user_id === auth()->id(), 403);
+
+    $music->delete();
+
+    return redirect()
+        ->route('MyConstellation')
+        ->with('success', 'Musique supprimée.');
+}
 }

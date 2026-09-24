@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::all();
+
+        return view('welcome', compact('users'));
+    }
+
     public function myConstellation()
     {
         $user = auth()->user()->load('musics');
@@ -14,20 +21,24 @@ class UserController extends Controller
         return view('auth.MyConstellation', compact('user'));
     }
 
-    public function index()
+    public function search(Request $request)
     {
-        $users = User::latest()->get();
+        $query = $request->validate([
+            'query' => 'required|string|max:20',
+        ])['query'];
 
-        return view('welcome', compact('users'));
+        $users = User::where('name', 'like', "%{$query}%")->get();
+
+        return view('welcome', compact('users', 'query'));
     }
 
-    /**
-     * Display a listing of the resource.
-     */
+
     public function discovery(User $user)
     {
         $user->load('musics');
 
         return view('auth.Discovery', compact('user'));
     }
+
+
 }

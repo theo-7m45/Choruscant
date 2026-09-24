@@ -4,12 +4,21 @@
 <body>
     <h1>Choruscant</h1>
     <p>Découvrez et partagez votre musique.</p>
+    <form action="{{ route('search') }}" method="GET">
+        <input type="text" name="query" placeholder="Rechercher un utilisateur" required>
+        <button type="submit">Rechercher</button>
+    </form>
 
-    <h2>Découvrir les utilisateurs</h2>
+    @isset($query)
+        <h2>Résultats pour « {{ $query }} »</h2>
+    @else
+        <h2>Cherche un utilisateurs</h2>
+    @endisset
+
     @forelse ($users as $user)
         <article>
             <h3>{{ $user->name }}</h3>
-            <a href="{{ route('Discovery', $user) }}">Visiter ce compte</a>
+            <a href="{{ route('Discovery', $user) }}">Visiter cette constellation</a>
         </article>
     @empty
         <p>Aucun utilisateur à découvrir.</p>
