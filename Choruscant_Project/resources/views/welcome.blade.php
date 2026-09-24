@@ -43,7 +43,7 @@
             background: #ffffff;
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            transition: transform 0.2s ease;
+            transition: width 0.1s ease, height 0.1s ease, transform 0.2s ease;
         }
 
         .star-dot:hover {
@@ -60,7 +60,7 @@
 </head>
 <body>
     <h1>Choruscant</h1>
-    <p>Découvrez et partagez votre musique.</p>
+    <p>Découvre et diffuse la musique à travers tout l'univers/p>
     <form action="{{ route('search') }}" method="GET">
         <input type="text" name="query" placeholder="Rechercher un utilisateur" required>
         <button type="submit">Rechercher</button>
@@ -120,12 +120,18 @@
             dot.style.opacity = maxOpacity.toFixed(2);
             dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + maxOpacity + ')';
 
+            if (Math.random() > 0.35) {
+                return;
+            }
+
             const flickerSpeed = 80 + index * 15;
             let flickerCount = 0;
 
             const flicker = () => {
                 if (flickerCount >= 5) {
                     flickerCount = 0;
+                    dot.style.width = randomSize + 'px';
+                    dot.style.height = randomSize + 'px';
                     dot.style.opacity = maxOpacity.toFixed(2);
                     dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + maxOpacity + ')';
                     setTimeout(flicker, 1500);
@@ -133,6 +139,9 @@
                 }
 
                 const opacity = minOpacity + Math.random() * (maxOpacity - minOpacity);
+                const size = randomSize * (0.55 + opacity * 0.45);
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
                 dot.style.opacity = opacity.toFixed(2);
                 dot.style.boxShadow = '0 0 ' + glow + 'px rgba(255, 255, 255, ' + opacity + ')';
                 flickerCount++;
