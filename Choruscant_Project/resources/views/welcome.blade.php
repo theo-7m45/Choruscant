@@ -187,6 +187,10 @@
             background: #ffffff;
             color: #000000;
         }
+
+        .universe-title {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -233,7 +237,7 @@
         @endif
     @endisset
 
-    <h2>L'univers</h2>
+    <h2 class="universe-title">L'univers</h2>
     @foreach ($users as $user)
         <a href="{{ route('discovery', $user) }}" aria-label="Voir la constellation de {{ $user->name }}" title="Voir la constellation de {{ $user->name }}" class="star-dot"></a>
     @endforeach
