@@ -76,6 +76,6 @@
         <button type="submit">Enregistrer</button>
     </form>
 
-    <a href="{{ route('MyConstellation') }}">Annuler</a>
+    <a href="{{ route('my-constellation') }}">Annuler</a>
 </body>
 </html>

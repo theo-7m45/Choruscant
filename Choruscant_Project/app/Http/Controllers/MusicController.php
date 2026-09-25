@@ -50,7 +50,7 @@ class MusicController extends Controller
         $music->update($data);
 
         return redirect()
-            ->route('MyConstellation')
+            ->route('my-constellation')
             ->with('success', 'Musique modifiée.');
     }
 
@@ -63,7 +63,7 @@ public function delete(Music $music)
     $music->delete();
 
     return redirect()
-        ->route('MyConstellation')
+        ->route('my-constellation')
         ->with('success', 'Musique supprimée.');
 }
 }
