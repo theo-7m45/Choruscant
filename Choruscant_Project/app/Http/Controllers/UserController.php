@@ -25,7 +25,7 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $query = $request->validate([
-            'query' => 'required|string|max:20',
+            'query' => 'required|string|max:12',
         ])['query'];
 
         $users = User::all();

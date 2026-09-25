@@ -245,7 +245,7 @@
     <!-- Barre de recherche flottante en bas à gauche -->
     <div class="search-container">
         <form action="{{ route('search') }}" method="GET" class="search-form">
-            <input type="text" name="query" placeholder="Rechercher une constellation ..." required class="search-input">
+            <input type="text" name="query" placeholder="Rechercher une constellation ..." maxlength="12" required class="search-input">
             <button type="submit" class="search-btn">
                 <!-- Icône SVG Loupe -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
