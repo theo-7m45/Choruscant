@@ -88,6 +88,11 @@
 </head>
 <body>
     <h1>MyConstellation</h1>
+
+    @if (session('success'))
+        <p>{{ session('success') }}</p>
+    @endif
+
     <p>Bienvenue dans ta constellation musicale, {{ $user->name }}.</p>
 
         <h2>Ajouter une musique</h2>
