@@ -56,3 +56,34 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+_________________________________________________
+
+## Description du site
+
+Ce site permet aux utilisateurs de partager leurs musiques préférées et d’en découvrir de nouvelles facilement.
+
+## Page d’accueil
+
+La page d’accueil affiche des étoiles, chaque étoile représentant un utilisateur.
+
+## Page Discovery
+
+En cliquant sur l’étoile d’un utilisateur que l'on soit connecter ou non, on peut accéder à sa page Discovery et découvrir les musiques qu’il a partagées.
+
+## Page MyConstellation
+
+La page MyConstellation correspond à notre profil. On peut y ajouter, modifier ou supprimer nos musiques grâce à l'ID de l’URL de la vidéo YouTube que l'on souhaite partager.
+
+## Inscription
+
+L’inscription permet à chaque utilisateur de créer son propre profil et de publier ses musiques.
+
+Une fois inscrit, l’utilisateur peut se connecter à tout moment pour gérer son compte et ses musiques.
+
+Deux utilisateurs ne peuvent pas avoir le même nom.
+
+## Recherche
+
+Une fonction de recherche permet de retrouver un utilisateur grâce à son nom.
