@@ -57,7 +57,7 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Bouton de connexion 
+        /* Bouton de connexion */
         .btn-primary {
             background: #6a329f; 
             border: 1px solid #6a329f;
