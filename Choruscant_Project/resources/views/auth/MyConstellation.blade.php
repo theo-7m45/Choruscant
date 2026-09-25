@@ -50,7 +50,7 @@
         iframe { display: block; max-width: 100%; margin-bottom: 1rem; border: 1px solid #333; }
         article form { display: inline-block; margin: 0 0 0 0.5rem; }
         .music-star {
-            position: relative;
+            position: absolute;
             width: 10px;
             height: 10px;
             margin: 1.5rem;
@@ -78,6 +78,12 @@
         .music-star:hover { transform: scale(1.25); }
         .music-star[aria-expanded="true"] { box-shadow: 0 0 14px #fff; }
         article[hidden] { display: none; }
+        .music-field {
+            position: relative;
+            width: 100%;
+            min-height: 260px;
+            margin: 1rem 0;
+        }
     </style>
 </head>
 <body>
@@ -137,6 +143,9 @@
     </form>
 
     <script>
+        const musicField = document.createElement('div');
+        const musicStars = [];
+
         document.querySelectorAll('article').forEach((article) => {
             const star = document.createElement('button');
             star.type = 'button';
@@ -144,7 +153,7 @@
             star.setAttribute('aria-expanded', 'false');
             star.setAttribute('aria-label', 'Afficher la musique');
             article.hidden = true;
-            article.parentNode.insertBefore(star, article);
+            musicStars.push(star);
 
             star.addEventListener('click', () => {
                 const isOpen = !article.hidden;
@@ -152,6 +161,39 @@
                 star.setAttribute('aria-expanded', String(!isOpen));
             });
         });
+
+        if (musicStars.length) {
+            const spacing = 75;
+            let fieldHeight = Math.max(260, Math.ceil(Math.sqrt(musicStars.length)) * 100);
+            const positions = [];
+
+            musicField.className = 'music-field';
+            musicField.style.height = fieldHeight + 'px';
+            document.querySelector('article').before(musicField);
+            musicStars.forEach((star) => musicField.append(star));
+
+            musicStars.forEach((star) => {
+                let position;
+
+                do {
+                    position = {
+                        x: spacing / 2 + Math.random() * (musicField.clientWidth - spacing),
+                        y: spacing / 2 + Math.random() * (fieldHeight - spacing)
+                    };
+
+                    if (positions.every((other) => Math.hypot(position.x - other.x, position.y - other.y) >= spacing)) {
+                        break;
+                    }
+
+                    fieldHeight += 100;
+                    musicField.style.height = fieldHeight + 'px';
+                } while (true);
+
+                positions.push(position);
+                star.style.left = position.x + 'px';
+                star.style.top = position.y + 'px';
+            });
+        }
     </script>
 </body>
 </html>
